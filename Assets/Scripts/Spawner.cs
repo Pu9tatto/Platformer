@@ -1,33 +1,34 @@
+using System.Collections;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private Coin _prefab;
     [SerializeField] private float _spawnDelay = 2;
-
     [SerializeField] private Transform[] _points;
-    private float _runningTime;
+
+    private bool _isSpawning = true;
     private int _currentPoint = 0;
 
-    private void Update()
+    private void Start()
     {
-        _runningTime += Time.deltaTime;
-
-        if (_runningTime >= _spawnDelay)
-        {
-            SpawnEnemy();
-        }
+        StartCoroutine(SpawnEnemy(_spawnDelay));
     }
 
-    private void SpawnEnemy()
+    private IEnumerator SpawnEnemy(float spawnDelay)
     {
-        _runningTime = 0;
+        var waitForSpawnDelay = spawnDelay;
 
-        Instantiate(_prefab, _points[_currentPoint].position, Quaternion.identity);
+        while (_isSpawning)
+        {
+            Instantiate(_prefab, _points[_currentPoint].position, Quaternion.identity);
 
-        _currentPoint++;
+            _currentPoint++;
 
-        if (_currentPoint >= _points.Length)
-            _currentPoint = 0;
+            if (_currentPoint >= _points.Length)
+                _currentPoint = 0;
+
+            yield return new WaitForSeconds(waitForSpawnDelay);
+        }
     }
 }

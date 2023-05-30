@@ -9,7 +9,9 @@ public class PointPatrol : MonoBehaviour
 
     private void Update()
     {
-        float newPositionX = Mathf.MoveTowards(transform.position.x, _points[_currentPoint].position.x, _speed * Time.deltaTime);
+        float newPositionX = Mathf.MoveTowards(transform.position.x, 
+            _points[_currentPoint].position.x, _speed * Time.deltaTime);
+
         transform.position = new Vector3(newPositionX, transform.position.y, transform.position.z);
 
         if(transform.position.x == _points[_currentPoint].position.x)

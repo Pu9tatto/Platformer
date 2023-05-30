@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent (typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(SpriteRenderer))]
 
@@ -8,6 +8,8 @@ public class Movement : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private float _jumpForce;
+
+    private readonly int IsMove = Animator.StringToHash("IsMove");
 
     private Rigidbody2D _rigidbody;
     private Animator _animator;
@@ -52,7 +54,7 @@ public class Movement : MonoBehaviour
 
     private void Move(float velocityX)
     {
-        transform.Translate(velocityX , 0, 0);
+        transform.Translate(velocityX, 0, 0);
     }
 
     private void Jump()
@@ -62,6 +64,6 @@ public class Movement : MonoBehaviour
 
     private void SetAnimations()
     {
-        _animator.SetBool("IsMove", _velocityX != 0);
+        _animator.SetBool(IsMove, _velocityX != 0);
     }
 }
